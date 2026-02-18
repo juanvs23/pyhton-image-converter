@@ -1,0 +1,15 @@
+# Ignorar contenido recursivo en carpetas de imágenes de origen y destino
+# Ignora todos los archivos y subcarpetas dentro de `source/` y `target/`
+source/
+target/
+
+# Logs
+logs/
+
+# Entorno virtual
+.venv/
+
+# Archivos compilados de Python
+__pycache__/
+.pytest_cache/
+

@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^python3 main\\.py --dry-run$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
