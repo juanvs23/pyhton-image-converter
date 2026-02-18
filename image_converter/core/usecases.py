@@ -10,7 +10,21 @@ def convert_folder(source: Path, target: Path, quality: int = 60, dry_run: bool 
 
     Retorna un dict con conteo de éxitos y fallos.
     """
-    extensions = [".jpg", ".jpeg", ".JPG", ".JPEG"]
+    # Soportar JPG/JPEG, PNG, TIFF y BMP (mayúsculas/minúsculas)
+    extensions = [
+        ".jpg",
+        ".jpeg",
+        ".JPG",
+        ".JPEG",
+        ".png",
+        ".PNG",
+        ".tif",
+        ".tiff",
+        ".TIF",
+        ".TIFF",
+        ".bmp",
+        ".BMP",
+    ]
     archivos = [p for p in find_images_recursively(source, extensions)]
 
     if not archivos:

@@ -46,6 +46,13 @@ Nota: la IA debe preferir usar el intérprete en `.venv/bin/python` cuando ejecu
 - Usar siempre rutas absolutas o bien tratar correctamente rutas con espacios (usar comillas en CLI).
 - Soportar `jpg` y `jpeg` en mayúsculas y minúsculas.
 - Mantener transparencia cuando exista; convertir a `RGB` cuando no exista.
+ - Soportar `jpg`, `jpeg` y `png` en mayúsculas y minúsculas.
+ - Mantener transparencia cuando exista; convertir a `RGB` cuando no exista.
+ - Nota: formatos animados (GIF/APNG) no son soportados por defecto.
+ - Soportar `jpg`, `jpeg`, `png`, `tif`/`tiff` y `bmp` en mayúsculas y minúsculas.
+ - Mantener transparencia cuando exista; convertir a `RGB` cuando no exista.
+ - No preservar metadata (EXIF/ICC/DPI) en las conversiones por defecto.
+ - Nota: formatos animados (GIF/APNG) no son soportados por defecto.
  - Mantener transparencia cuando exista; convertir a `RGB` cuando no exista.
  - Se añadió un sistema de logging basado en `logging` con `RotatingFileHandler` que escribe por defecto en `logs/conversion.log`.
 	 - El logger rota a 5MB y mantiene 5 backups.

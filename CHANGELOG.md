@@ -25,6 +25,18 @@ Formato: Mantener entradas por versión, con fecha y cambios listados.
   - Separación de responsabilidades: `usecases` orquesta la conversión; `adapters` realizan I/O.
   - Actualización de documentación (`README.md`, `PROJECT_CONTEXT.md`) para reflejar la nueva arquitectura.
 
+## [0.2.1] - 2026-02-18
+- Añadido soporte para archivos PNG.
+  - Se detectan y convierten archivos `.png` preservando transparencia cuando existe.
+  - Documentación actualizada: `README.md`, `PROJECT_CONTEXT.md`.
+  - Nota: animaciones (GIF/APNG) no están soportadas.
+
+## [0.2.2] - 2026-02-18
+- Añadido soporte para TIFF y BMP.
+  - Soporte para `.tif`, `.tiff`, `.bmp` (mayúsculas/minúsculas) en la búsqueda recursiva.
+  - Las conversiones no preservan metadata (EXIF, ICC profile, DPI) por defecto.
+  - Documentación actualizada: `README.md`, `PROJECT_CONTEXT.md`.
+
 ## Cómo escribir futuras entradas
 - Añadir una nueva sección con la nueva versión en la parte superior.
 - Usar formato: `## [X.Y.Z] - YYYY-MM-DD` y listar cambios.

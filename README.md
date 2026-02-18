@@ -75,6 +75,20 @@ Logging (detalles):
 	- `--log-level <nivel>`: nivel de logging (`DEBUG`, `INFO`, `WARNING`, `ERROR`).
 - El archivo de log rota a 5MB y mantiene hasta 5 archivos de respaldo.
 
+## Formatos soportados
+
+- JPG / JPEG (mayúsculas y minúsculas). 
+- PNG (soporte básico). Cuando una imagen PNG tiene canal alpha se preserva la transparencia; si no, se convierte a `RGB`.
+
+Limitaciones:
+- No se soportan animaciones (por ejemplo GIFs animados o APNG) — esos requieren un manejo específico.
+
+- TIFF / TIF (archivos de imagen ráster). Se convierten, no se preserva metadata.
+- BMP (Bitmap). Se convierten, no se preserva metadata.
+
+Nota sobre metadata:
+- El proceso NO preserva metadata como EXIF, ICC profile o DPI. Esto evita exponer información adicional y reduce el tamaño del archivo resultante.
+
 ## Arquitectura y modularización
 
 El proyecto fue reorganizado siguiendo una estructura inspirada en Clean Architecture para separar responsabilidades:

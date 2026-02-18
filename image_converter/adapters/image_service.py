@@ -4,6 +4,7 @@ from PIL import Image
 
 
 def _has_transparency(img: Image.Image) -> bool:
+    # Detección básica de transparencia compatible con PNG (RGBA/LA) y paletas con transparencia (P)
     if img.mode in ("RGBA", "LA"):
         return True
     if img.mode == "P" and "transparency" in img.info:
@@ -21,7 +22,13 @@ def convert_image(path_in: Path, path_out: Path, quality: int) -> bool:
             else:
                 if img.mode != "RGB":
                     img = img.convert("RGB")
-            img.save(path_out, "WEBP", quality=quality)
+            # Guardar sin metadata: hacer una copia y limpiar info conocida
+            img_to_save = img.copy()
+            for meta_key in ("exif", "icc_profile", "dpi", "transparency"):
+                if meta_key in img_to_save.info:
+                    img_to_save.info.pop(meta_key, None)
+
+            img_to_save.save(path_out, "WEBP", quality=quality)
         logging.info("Convertido: %s -> %s", path_in, path_out)
         return True
     except Exception:
