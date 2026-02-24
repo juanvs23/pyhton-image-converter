@@ -29,10 +29,10 @@ def convert_image(path_in: Path, path_out: Path, quality: int) -> bool:
                     img_to_save.info.pop(meta_key, None)
 
             img_to_save.save(path_out, "WEBP", quality=quality)
-        logging.info("Convertido: %s -> %s", path_in, path_out)
+        logging.info("Converted: %s -> %s", path_in, path_out)
         return True
     except Exception:
-        logging.exception("Error al convertir %s", path_in)
+        logging.exception("Error converting %s", path_in)
         return False
 
 

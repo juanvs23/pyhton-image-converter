@@ -2,18 +2,23 @@
 
 Pequeño script para convertir imágenes JPG/JPEG a WebP manteniendo la estructura de carpetas.
 
-**Estado:** 0.1.0
+```markdown
+# Image Converter
 
-## Requisitos
-- Python 3.8+ (entorno de desarrollo detectado: Python 3.12.3)
-- Dependencias en [requirements.txt](requirements.txt)
+Small script to convert JPG/JPEG images to WebP while preserving folder structure.
 
-Entorno detectado en el proyecto:
+**Status:** 0.1.0
+
+## Requirements
+- Python 3.8+ (development environment detected: Python 3.12.3)
+- Dependencies in [requirements.txt](requirements.txt)
+
+Detected environment in the project:
 
 - Python: 3.12.3
 - Pillow: 12.1.1
 
-Instalar dependencias:
+Install dependencies:
 
 ```bash
 python3 -m venv .venv
@@ -21,113 +26,115 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Uso (CLI)
+## Usage (CLI)
 
-Mostrar ayuda:
+Show help:
 
 ```bash
 python3 main.py --help
 ```
 
-Ejemplo: listado (dry-run) usando la carpeta por defecto `source`:
+Example: list operations (dry-run) using the default `source` folder:
 
 ```bash
 python3 main.py --dry-run
 ```
 
-Forzar carpeta fuente (ruta relativa o absoluta) en dry-run:
+Force source folder (relative or absolute) in dry-run:
 
 ```bash
-python3 main.py --source "./ruta/a/mis/imagenes" --dry-run
+python3 main.py --source "./path/to/my/images" --dry-run
 ```
 
-Ejecutar conversión real (usa `source/` y `target/` por defecto):
+Run actual conversion (uses `source/` and `target/` by default):
 
 ```bash
 python3 main.py
 ```
 
-Especificar carpeta fuente, destino y calidad:
+Specify source, target and quality:
 
 ```bash
-python3 main.py -s "/ruta/source" -t "/ruta/target" -q 80
+python3 main.py -s "/path/source" -t "/path/target" -q 80
 ```
 
-Parámetros principales:
-- `--source`, `-s`: Carpeta origen. Si no se indica, usa `source/` en el proyecto (se crea si no existe).
-- `--target`, `-t`: Carpeta destino. Por defecto `target/`.
-- `--quality`, `-q`: Calidad WebP (1-100). Por defecto 60.
-- `--dry-run`: No escribe archivos, solo lista las acciones.
+Main options:
+- `--source`, `-s`: Source folder. If not provided, `source/` in the project is used (it will be created if missing).
+- `--target`, `-t`: Target folder. Default is `target/`.
+- `--quality`, `-q`: WebP quality (1-100). Default is 60.
+- `--dry-run`: Do not write files, just list the actions.
 
-## Comportamiento
-- El script recorre recursivamente la carpeta fuente y convierte los archivos con extensión `.jpg` y `.jpeg` (también mayúsculas).
-- La estructura relativa de carpetas se preserva en la carpeta destino; los archivos se guardan con la extensión `.webp`.
-- Se preserva la transparencia cuando la imagen la tiene; en caso contrario se fuerza a `RGB`.
+## Behavior
+- The script recursively walks the source folder and converts files with `.jpg` and `.jpeg` extensions (case-insensitive).
+- The relative folder structure is preserved in the target folder; output files use the `.webp` extension.
+- Transparency is preserved when present; otherwise images are converted to `RGB`.
 
-- El script crea un registro (log) en `logs/conversion.log` por defecto. Puedes cambiar la ruta con `--log-file`.
-- El directorio `logs/` está en `.gitignore` para evitar subir registros al repositorio.
+- By default the script writes a log to `logs/conversion.log`. You can change the path with `--log-file`.
+- The `logs/` directory is included in `.gitignore` to avoid committing logs to the repository.
 
-Logging (detalles):
+Logging details:
 
-- Por defecto el script escribe logs en `logs/conversion.log` usando un `RotatingFileHandler`.
-- Flags disponibles:
-	- `--log-file <ruta>`: archivo de log a usar (por defecto `logs/conversion.log`).
-	- `--log-level <nivel>`: nivel de logging (`DEBUG`, `INFO`, `WARNING`, `ERROR`).
-- El archivo de log rota a 5MB y mantiene hasta 5 archivos de respaldo.
+- By default the script writes logs to `logs/conversion.log` using a `RotatingFileHandler`.
+- Available flags:
+	- `--log-file <path>`: log file to use (default `logs/conversion.log`).
+	- `--log-level <level>`: logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`).
+- The log file rotates at 5MB and keeps up to 5 backups.
 
-## Formatos soportados
+## Supported formats
 
-- JPG / JPEG (mayúsculas y minúsculas). 
-- PNG (soporte básico). Cuando una imagen PNG tiene canal alpha se preserva la transparencia; si no, se convierte a `RGB`.
+- JPG / JPEG (case-insensitive).
+- PNG (basic support). PNG images with an alpha channel preserve transparency; otherwise they are converted to `RGB`.
 
-Limitaciones:
-- No se soportan animaciones (por ejemplo GIFs animados o APNG) — esos requieren un manejo específico.
+Limitations:
+- Animated images (e.g., animated GIFs or APNG) are not supported by default — they require specific handling.
 
-- TIFF / TIF (archivos de imagen ráster). Se convierten, no se preserva metadata.
-- BMP (Bitmap). Se convierten, no se preserva metadata.
+- TIFF / TIF (raster image files) are supported; metadata is not preserved.
+- BMP (Bitmap) files are supported; metadata is not preserved.
 
-Nota sobre metadata:
-- El proceso NO preserva metadata como EXIF, ICC profile o DPI. Esto evita exponer información adicional y reduce el tamaño del archivo resultante.
+Note about metadata:
+- The process DOES NOT preserve metadata such as EXIF, ICC profile or DPI. This avoids leaking extra information and reduces the resulting file size.
 
-## Arquitectura y modularización
+## Architecture and modularization
 
-El proyecto fue reorganizado siguiendo una estructura inspirada en Clean Architecture para separar responsabilidades:
+The project follows a Clean Architecture-inspired structure to separate responsibilities:
 
-- `image_converter/cli.py`: Interfaz de línea de comandos y configuración de logging.
-- `image_converter/core/usecases.py`: Lógica de alto nivel (orquestador de la conversión).
-- `image_converter/adapters/image_service.py`: Operaciones de bajo nivel (I/O, apertura y guardado de imágenes).
-- `main.py`: Entrypoint mínimo que delega en `image_converter.cli.main()`.
+- `image_converter/cli.py`: Command-line interface and logging setup.
+- `image_converter/core/usecases.py`: High-level logic (conversion orchestrator).
+- `image_converter/adapters/image_service.py`: Low-level operations (I/O, open/save images).
+- `main.py`: Minimal entrypoint that delegates to `image_converter.cli.main()`.
 
-Beneficios:
-- Código más testeable y mantenible.
-- Separación clara entre lógica de negocio y detalles de implementación.
+Benefits:
+- More testable and maintainable code.
+- Clear separation between business logic and implementation details.
 
-Cómo ejecutar usando la nueva estructura:
+How to run using the new structure:
 
 ```bash
-# Entrypoint tradicional
+# Traditional entrypoint
 python3 main.py --dry-run
 
-# O ejecutar el módulo directamente
+# Or run the module directly
 python3 -m image_converter.cli --help
 ```
 
-## Versionado
-Se utiliza versionado semántico (SemVer). La versión actual del proyecto es **0.1.0** (Initial release).
+## Versioning
+Semantic versioning (SemVer) is used. The current project version is **0.1.0** (Initial release).
 
-Información adicional del entorno (detectada en `.venv`):
+Additional environment info (detected in `.venv`):
 
 - Python: 3.12.3
 - Pillow: 12.1.1
 
-Formato SemVer: `MAJOR.MINOR.PATCH`
-- Cambios incompatibles: incrementar `MAJOR`.
-- Añadidos/funcionalidades: incrementar `MINOR`.
-- Correcciones/pequeñas mejoras: incrementar `PATCH`.
+SemVer format: `MAJOR.MINOR.PATCH`
+- Breaking changes: increment `MAJOR`.
+- Added features: increment `MINOR`.
+- Bug fixes / small improvements: increment `PATCH`.
 
 ## Changelog
-Ver [CHANGELOG.md](CHANGELOG.md).
+See [CHANGELOG.md](CHANGELOG.md).
 
-## Notas
-- Si trabajas en un entorno con espacios en la ruta del proyecto, pasa rutas entre comillas.
-- Para convertir grandes volúmenes, usa `--quality` adecuada y monitoriza espacio en disco.
+## Notes
+- If you work in a path that contains spaces, wrap paths in quotes.
+- For large batches, choose an appropriate `--quality` and monitor disk space.
+
+```

@@ -97,3 +97,13 @@ Cuando la IA realice cambios o proponga parches:
 ## Recomendaciones para la IA al modificar código
 - Mantener la separación entre capas: no mover lógica de negocio a `adapters` ni I/O a `core`.
 - Documentar cualquier cambio de interfaz pública en `image_converter` y actualizar `README.md` y `CHANGELOG.md`.
+
+## Regla de idioma
+
+A partir de ahora, las siguientes reglas se aplican al proyecto y deben ser respetadas por cualquier cambio automatizado o asistido por IA:
+
+- Los archivos `README.md` y `CHANGELOG.md` deben estar en inglés.
+- Las variables, nombres de funciones y mensajes de usuario dentro del código fuente deben utilizar inglés.
+- El archivo `PROJECT_CONTEXT.md` queda exento de esta regla y seguirá redactado en español.
+
+La IA debe aplicar estas reglas al realizar traducciones o refactorizaciones. Registrar cualquier cambio de variables en el changelog.

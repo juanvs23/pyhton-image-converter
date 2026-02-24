@@ -28,32 +28,32 @@ def setup_logging(log_file: str, level: str = "INFO"):
 
 
 def main(argv: list = None):
-    parser = argparse.ArgumentParser(description="Convertir JPG/JPEG a WebP manteniendo estructura de carpetas")
-    parser.add_argument("--source", "-s", help="Carpeta origen (por defecto: 'source' en el proyecto)")
-    parser.add_argument("--target", "-t", default="target", help="Carpeta destino (por defecto: 'target')")
-    parser.add_argument("--quality", "-q", type=int, default=60, help="Calidad WebP (1-100)")
-    parser.add_argument("--dry-run", action="store_true", help="Mostrar qué se convertiría sin escribir archivos")
-    parser.add_argument("--log-file", default="logs/conversion.log", help="Archivo de log (por defecto: logs/conversion.log)")
-    parser.add_argument("--log-level", default="INFO", help="Nivel de logging (DEBUG, INFO, WARNING, ERROR)")
+    parser = argparse.ArgumentParser(description="Convert JPG/JPEG to WebP preserving folder structure")
+    parser.add_argument("--source", "-s", help="Source folder (default: 'source' in the project)")
+    parser.add_argument("--target", "-t", default="target", help="Target folder (default: 'target')")
+    parser.add_argument("--quality", "-q", type=int, default=60, help="WebP quality (1-100)")
+    parser.add_argument("--dry-run", action="store_true", help="Show what would be converted without writing files")
+    parser.add_argument("--log-file", default="logs/conversion.log", help="Log file (default: logs/conversion.log)")
+    parser.add_argument("--log-level", default="INFO", help="Logging level (DEBUG, INFO, WARNING, ERROR)")
     args = parser.parse_args(argv)
 
     cwd = Path.cwd()
     if args.source:
-        src = Path(args.source)
+        source_path = Path(args.source)
     else:
-        src = cwd / "source"
-        if not src.exists():
-            src.mkdir(parents=True, exist_ok=True)
-            print(f"No se encontró la carpeta 'source'. Se ha creado en: {src}")
+        source_path = cwd / "source"
+        if not source_path.exists():
+            source_path.mkdir(parents=True, exist_ok=True)
+            print(f"'source' folder not found. Created at: {source_path}")
 
     setup_logging(args.log_file, args.log_level)
 
-    if not src.exists() or not src.is_dir():
-        logging.error("Error: la carpeta fuente '%s' no existe o no es un directorio.", src)
+    if not source_path.exists() or not source_path.is_dir():
+        logging.error("Error: source folder '%s' does not exist or is not a directory.", source_path)
         raise SystemExit(1)
 
-    dst = Path(args.target)
-    dst.mkdir(parents=True, exist_ok=True)
+    target_path = Path(args.target)
+    target_path.mkdir(parents=True, exist_ok=True)
 
-    result = convert_folder(src, dst, quality=args.quality, dry_run=args.dry_run)
-    logging.info("Proceso finalizado. Éxitos: %d. Fallos: %d.", result.get("success", 0), result.get("fail", 0))
+    result = convert_folder(source_path, target_path, quality=args.quality, dry_run=args.dry_run)
+    logging.info("Process finished. Successes: %d. Failures: %d.", result.get("success", 0), result.get("fail", 0))

@@ -1,42 +1,42 @@
 # Changelog
 
-Todos los cambios notables en este proyecto se documentan en este archivo.
+All notable changes to this project are documented in this file.
 
-Formato: Mantener entradas por versión, con fecha y cambios listados.
+Format: keep entries per version, with date and listed changes.
 
 ## [0.1.0] - 2026-02-18
-- Release inicial.
-  - Refactorización de `main.py` a CLI con `argparse`.
-  - Recorrido recursivo de carpetas y preservación de estructura en `target/`.
-  - Manejo de transparencia y conversión a WebP.
-  - Opción `--dry-run` para simular conversiones.
-  - `requirements.txt` incluye `pillow`.
+- Initial release.
+  - Refactored `main.py` into a CLI using `argparse`.
+  - Recursive folder traversal and preservation of structure in `target/`.
+  - Transparency handling and conversion to WebP.
+  - `--dry-run` option to simulate conversions.
+  - `requirements.txt` includes `pillow`.
 
 ## [0.1.1] - 2026-02-18
-- Añadido sistema de logging.
-  - Se añadió `RotatingFileHandler` que escribe por defecto en `logs/conversion.log`.
-  - Añadidos flags CLI: `--log-file` y `--log-level`.
-  - Se añadió `logs/` a `.gitignore` para evitar subir registros.
+- Added logging system.
+  - Added `RotatingFileHandler` writing by default to `logs/conversion.log`.
+  - Added CLI flags: `--log-file` and `--log-level`.
+  - Added `logs/` to `.gitignore` to avoid committing logs.
 
 ## [0.2.0] - 2026-02-18
-- Modularización y reorganización siguiendo Clean Architecture.
-  - Nuevo paquete `image_converter/` con módulos `cli`, `core` y `adapters`.
-  - `main.py` convertido a entrypoint ligero que delega en `image_converter.cli.main()`.
-  - Separación de responsabilidades: `usecases` orquesta la conversión; `adapters` realizan I/O.
-  - Actualización de documentación (`README.md`, `PROJECT_CONTEXT.md`) para reflejar la nueva arquitectura.
+- Modularization and reorganization following Clean Architecture.
+  - New package `image_converter/` with modules `cli`, `core` and `adapters`.
+  - `main.py` converted to a lightweight entrypoint delegating to `image_converter.cli.main()`.
+  - Separation of concerns: `usecases` orchestrates conversion; `adapters` perform I/O.
+  - Documentation updated (`README.md`, `PROJECT_CONTEXT.md`) to reflect the new architecture.
 
 ## [0.2.1] - 2026-02-18
-- Añadido soporte para archivos PNG.
-  - Se detectan y convierten archivos `.png` preservando transparencia cuando existe.
-  - Documentación actualizada: `README.md`, `PROJECT_CONTEXT.md`.
-  - Nota: animaciones (GIF/APNG) no están soportadas.
+- Added support for PNG files.
+  - `.png` files are detected and converted preserving transparency when present.
+  - Documentation updated: `README.md`, `PROJECT_CONTEXT.md`.
+  - Note: animations (GIF/APNG) are not supported.
 
 ## [0.2.2] - 2026-02-18
-- Añadido soporte para TIFF y BMP.
-  - Soporte para `.tif`, `.tiff`, `.bmp` (mayúsculas/minúsculas) en la búsqueda recursiva.
-  - Las conversiones no preservan metadata (EXIF, ICC profile, DPI) por defecto.
-  - Documentación actualizada: `README.md`, `PROJECT_CONTEXT.md`.
+- Added support for TIFF and BMP.
+  - Support for `.tif`, `.tiff`, `.bmp` (case-insensitive) in recursive search.
+  - Conversions do not preserve metadata (EXIF, ICC profile, DPI) by default.
+  - Documentation updated: `README.md`, `PROJECT_CONTEXT.md`.
 
-## Cómo escribir futuras entradas
-- Añadir una nueva sección con la nueva versión en la parte superior.
-- Usar formato: `## [X.Y.Z] - YYYY-MM-DD` y listar cambios.
+## How to write future entries
+- Add a new section for the new version at the top.
+- Use format: `## [X.Y.Z] - YYYY-MM-DD` and list changes.
